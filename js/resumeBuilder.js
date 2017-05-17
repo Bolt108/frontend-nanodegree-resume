@@ -10,7 +10,7 @@ var bio = {
     },
     "welcomeMessage": "Hi I am Raghav. This image is a placeholder because I currently don't have a very up to date photo.",
     "skills": ["Basketball", "Programming", "IOT"],
-    "biopic": "/Users/raghavgoyal/Desktop/frontend-nanodegree-resume-master/images/fry.jpg",
+    "biopic": "images/fry.jpg",
 };
 
 var education = {
@@ -72,7 +72,7 @@ var projects = {
             "title": "Rubber Band Shooter",
             "dates": "2011-2012",
             "description": "I built a rubber band shooter using the Arduino Uno.",
-            "images": ["/Users/raghavgoyal/Desktop/frontend-nanodegree-resume-master/images/fry.jpg", "/Users/raghavgoyal/Desktop/frontend-nanodegree-resume-master/images/197x148.gif"]
+            "images": ["images/fry.jpg", "images/197x148.gif"]
 
         },
 
@@ -80,7 +80,7 @@ var projects = {
             "title": "Labrynth and Color Simon Says Remix",
             "dates": "2011-2012",
             "description": "I built a remix of the classic labrynth board game and the color version of Simon Says using the Arduino Uno.",
-            "images": ["/Users/raghavgoyal/Desktop/frontend-nanodegree-resume-master/images/fry.jpg", "/Users/raghavgoyal/Desktop/frontend-nanodegree-resume-master/images/197x148.gif"]
+            "images": ["images/fry.jpg", "images/197x148.gif"]
         }
 
     ]
@@ -95,12 +95,16 @@ bio.display = function() {
 
     var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
     $("#header").append(formattedMobile);
+    $("#footerContacts").append(formattedMobile);
     var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
     $("#header").append(formattedEmail);
+    $("#footerContacts").append(formattedEmail);
     var formattedGithub = HTMLgithub.replace("%data%", bio.contacts.github);
     $("#header").append(formattedGithub);
+    $("#footerContacts").append(formattedGithub);
     var formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location);
     $("#header").append(formattedLocation);
+    $("#footerContacts").append(formattedLocation);
 
     var formattedPic = HTMLbioPic.replace("%data%", bio.biopic);
     $("#header").append(formattedPic);
@@ -108,17 +112,18 @@ bio.display = function() {
     var formattedWelcome = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
     $("#header").append(formattedWelcome);
 
+    var formattedSkills;
+    $("#header").append(HTMLskillsStart);
+
     if (bio.skills.length > 0) {
 
-        $("#header").append(HTMLskillsStart);
-        var formattedSkills = HTMLskills.replace("%data%", bio.skills[0]);
-        $("#skills").append(formattedSkills);
-        formattedSkills = HTMLskills.replace("%data%", bio.skills[1]);
-        $("#skills").append(formattedSkills);
-        formattedSkills = HTMLskills.replace("%data%", bio.skills[2]);
-        $("#skills").append(formattedSkills);
+        bio.skills.forEach(function(item,index){
+        
+            formattedSkills = HTMLskills.replace("%data%", item);
+            $("#skills").append(formattedSkills);
+        
+        });
     }
-
 
 
 };
@@ -222,9 +227,13 @@ projects.display = function() {
 
         var formattedprojectDescription = HTMLprojectDescription.replace("%data%", project.description);
         $(".project-entry:last").append(formattedprojectDescription);
-
-        var formattedprojectImages = HTMLprojectImage.replace("%data%", project.images[1]);
-        $(".project-entry:last").append(formattedprojectImages);
+        
+        project.images.forEach(function(item){
+        
+            var formattedprojectImages = HTMLprojectImage.replace("%data%", item);
+            $(".project-entry:last").append(formattedprojectImages);
+        
+        });
     });
 };
 
